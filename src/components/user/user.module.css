@@ -1,0 +1,140 @@
+.container{
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #ECECEC;
+    box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+.top{
+    display: grid;
+    grid-template-columns: 50px 1fr 35px;
+    gap: 15px;
+}
+.top img{
+    height: 50px;
+    width: 50px;
+    background-color: var(--purple);
+    border-radius: 30px;
+    object-fit: cover;
+}
+.top_details{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.top_details h3, .top_details p{
+    margin: 0;
+}
+.top_details h3{
+    font-weight: 500;
+    font-size: 16px;
+}
+.top_details p{
+    font-size: 14px;
+    color: #6d6d6d;
+}
+.top_details p span{
+    color: #000;
+    font-weight: 500;
+}
+.more{
+    height: 35px;
+    width: 35px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    border: 0.5px solid #cccccc;
+}
+.balances{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+.balance{
+    height: 100px;
+    width: 100%;
+    border-radius: 10px;
+    border: 0.5px solid #cacaca;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+.balance h3, .plan h3{
+    margin: 0;
+    font-weight: 500;
+    font-size: 20px;
+}
+.balance p, .plan p{
+    margin: 0;
+    font-size: 15px;
+    opacity: 0.7;
+}
+.plan p{
+    opacity: 0.7;
+    font-weight: 500;
+}
+.plans{
+    margin-top: 20px;
+}
+.plans h2{
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+}
+.plans_container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+.plan{
+    height: 100px;
+    width: 100%;
+    margin-top: 15px;
+    background-color: rgba(20, 120, 234, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+.more_div{
+    height: fit-content;
+    width: 200px;
+    background-color: #fff;
+    box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.05);
+    position: absolute;
+    top: 65px;
+    right: 20px;
+    border: 0.5px solid #cacaca;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+}
+.more_div div{
+    height: 40px;
+    width: 100%;
+    background-color: #fff;
+    font-size: 14px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+.more_div div:hover{
+    background-color: #f9f9f9;
+}

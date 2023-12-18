@@ -1,0 +1,97 @@
+.container{
+    width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 30px;
+    padding-bottom: 200px;
+}
+.container h2{
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+}
+.back{
+    height: 40px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px;
+    color: red;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.availiable_balance{
+    color: #4d4d4d;
+    margin: 0;
+    margin-top: 7px;
+}
+.availiable_balance span{
+    color: rgb(0, 207, 0);
+    font-weight: 500;
+}
+.mainContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+}
+.planItem, .BalanceItem{
+    height: 150px;
+    width: 100%;
+    background-color: rgba(20, 120, 234, 0.1);
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+}
+.BalanceItem{
+    background-color: #f9f9f9;
+}
+.planItem input, .BalanceItem input{
+    height: 40px;
+    width: 100%;
+    background-color: transparent;
+    border: 0.5px solid var(--purple);
+    border-radius: 5px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.planItem input:focus, .BalanceItem input:focus{
+    outline: none;
+}
+.planItem p, .BalanceItem p{
+    margin: 0;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.container button{
+    height: 45px;
+    width: 200px;
+    background-color: var(--purple);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+}
+@media (max-width: 500px) {
+    .container{
+        width: calc(100% - 30px);
+    }
+    .mainContainer{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

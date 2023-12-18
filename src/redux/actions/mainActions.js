@@ -2,88 +2,60 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 const dbUrl = 'https://incomebrokers-default-rtdb.firebaseio.com/';
 
-export const setShowDrawer = (value) => {
-    return{
-        type: actionTypes.SETSHOWDRAWER,
-        value
-    }
-};
-
 export const fetch_data = () => {
     return dispatch => {
         dispatch(setLoading(true));
-
-        const email = localStorage.getItem('@localEmail');
+        console.log('hello orld')
 
         axios.get(dbUrl + 'users.json').then(r => {
-            //convert to array and map
             const data = r.data;
+            const arr = [];
             Object.keys(data).map(i => {
-                if(email === data[i].email){
-                    const userId = i
-                    const newUser = {...data[i], userId}
-                    dispatch(setUserData(newUser));
-                    dispatch(setLoading(false));
-                }
+                const item = {...data[i], userId: i};
+                arr.unshift(item)
             })
+            dispatch(setUsers(arr));
+            dispatch(setLoading(false));
         }).catch(e => {
-            console.log(e);
+            // console.log(e);
             dispatch(setLoading(false));
         })
     };
 };
 
-export const deposit = (amount, plan, coin, user) => {
+export const updateTransaction = (data) => {
     return dispatch => {
-        dispatch(setDepositLoader(true))
-        
-        const date = new Date().toLocaleDateString('en-US', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
+        dispatch(setLoading(true));
 
-        const transaction = {
-            amount: JSON.parse(amount),
-            plan,
-            coin,
-            type: 'deposit',
-            status: 'pending',
-            date
-        };
+        axios.put(dbUrl + '/users/' + data.userId + '.json', data).then(r => {
+            console.log(r);
+            // window.location.reload()
+            dispatch(setLoading(false));
+        }).catch(e => {
+            console.log(e);
+            dispatch(setLoading(false))
+        })
+    }
+};
 
-        if(user.transactions){
-            user.transactions.push(transaction);
-            axios.put(dbUrl + 'users/' + user.userId + '.json', user).then(r => {
-                console.log(r.data);
-                dispatch(setDepositModal(true));
-                dispatch(setDepositLoader(false))
-            }).catch(e => {
-                console.log(e);
-                dispatch(setDepositLoader(false))
-            })
-        }else{
-            const newUser = {
-                ...user,
-                transactions: []
-            };
-            newUser.transactions.push(transaction);
-            axios.put(dbUrl + 'users/' + user.userId + '.json', newUser).then(r => {
-                console.log(r.data);
-                dispatch(setDepositModal(true));
-                dispatch(setDepositLoader(false))
-            }).catch(e => {
-                console.log(e);
-                dispatch(setDepositLoader(false))
-            })
-        }
-        
+export const updateBalance = (data) => {
+    return dispatch => {
+        dispatch(setLoading(true));
+
+        axios.put(dbUrl + '/users/' + data.userId + '.json', data).then(r => {
+            console.log(r);
+            window.location.reload()
+            // dispatch(setLoading(false));
+        }).catch(e => {
+            console.log(e);
+            dispatch(setLoading(false))
+        })
     }
 }
 
-export const setUserData = (value) => {
+export const setUsers = (value) => {
     return{
-        type: actionTypes.SETUSERDATA,
+        type: actionTypes.SETUSERS,
         value
     }
 }
@@ -94,17 +66,3 @@ const setLoading = (value) => {
         value
     }
 };
-
-const setDepositLoader = (value) => {
-    return{
-        type: actionTypes.SETDEPOSITLOADING,
-        value
-    }
-};
-
-const setDepositModal = (value) => {
-    return{
-        type: actionTypes.SETDEPOSITMODAL,
-        value
-    }
-}

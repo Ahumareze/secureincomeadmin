@@ -1,57 +1,25 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { useState } from 'react'
 
-//containers
-import {
-  About,
-  Dashboard,
-  Deposit,
-  LandingPage,
-  Login,
-  Register,
-  Transactions,
-  Wallets,
-  Withdraw
-} from './containers';
-
-//redux actions
-import { init } from './redux/actions';
+//pages
+import { Dashboard, Transactions, UpdateBalance } from './containers';
 
 function App() {
-  //initialize
-  const dispatch = useDispatch();
+  //UI state
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [updateBalance, setUpdateBalance] = useState(null)
 
-  //redux state
-  const token = useSelector(state => state.authReducer.token);
+  let container = <Dashboard openTransactions={e => setSelectedUser(e)} updateBalance={e => setUpdateBalance(e)} />
 
-  useEffect(() => {
-    dispatch(init());
-  }, [])
-  
-  const authRoutes = (
-    <Routes>
-      <Route path='/' element={<LandingPage />} />
-      <Route path='/about' element={<About />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/login' element={<Login />} />
-      <Route path='*' element={<Navigate to={'/'} />} />
-    </Routes>
-  );
+  if(selectedUser){
+    container = <Transactions data={selectedUser} close={() => setSelectedUser(null)} />
+  }else if(updateBalance){
+    container = <UpdateBalance data={updateBalance} close={() => setUpdateBalance(null)} />
+  }
 
-  const dashboardRoutes = (
-    <Routes>
-      <Route path='/dashboard' element={<Dashboard />} />
-      <Route path='/deposit' element={<Deposit />} />
-      <Route path='/transactions' element={<Transactions />} />
-      <Route path='/withdraw' element={<Withdraw />} />
-      <Route path='/wallets' element={<Wallets />} />
-      <Route path='*' element={<Navigate to={'/dashboard'} />} />
-    </Routes>
-  )
   return (
-    token ? dashboardRoutes : authRoutes
+    container
   );
+
 }
 
-export default App;
+export default App

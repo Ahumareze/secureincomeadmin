@@ -1,54 +1,64 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 //styles
-import classes from './dashboard.module.css';
+import classes from './dashboard.module.css'
 
 //components
-import { DashboardHeader, SideDrawer, TransactionItem, TransactionModal } from '../../components';
-import BalanceBox from './components/BalanceBox';
-import Plans from './components/plans/Plans';
+import { Header, Loader, User } from '../../components';
 
 //icons
-import { FaWallet } from 'react-icons/fa';
-import { AiFillBank } from 'react-icons/ai';
-import { BsCreditCard2BackFill } from 'react-icons/bs';
-import { RiHandCoinFill } from 'react-icons/ri';
-import Transactions from './components/Transactions';
+import { FiSearch } from 'react-icons/fi';
 
+//redux actions
+import { fetch_data } from '../../redux/actions';
 
-function Dashboard() {
-    //redux state
-    const userData = useSelector(state => state.mainReducer.userData);
+function Dashboard({openTransactions, updateBalance}) {
+    //initialize
+    const dispatch = useDispatch();
 
     //UI state
-    const [showmodal, setShowmodal] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
-    let container;
+    //redux state
+    const users = useSelector(state => state.mainReducer.users)
+    const loading = useSelector(state => state.mainReducer.loading)
 
-    if(userData){
+    const filteredUsers = users.filter((user) =>
+        user.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    useEffect(() => {
+        dispatch(fetch_data());
+    }, []);
+
+    let container = <p>Empty screen</p>
+    if(users){
         container = (
             <div className={classes.container}>
-                <DashboardHeader title={'Dashboard'} />
-                <div className={classes.balanceBoxes}>
-                    <BalanceBox icon={ <FaWallet size={14} /> } name='Balance' secure amount={ userData.basic_plan + userData.advance_plan + userData.diamond_plan } />
-                    <BalanceBox icon={ <AiFillBank size={14} /> } name='Deposited' amount={userData.deposited}  />
-                    <BalanceBox icon={ <RiHandCoinFill size={14} /> } name='Earnings' amount={userData.earned}  />
-                    <BalanceBox icon={ <BsCreditCard2BackFill size={14} /> } name='Withdrawn' amount={userData.withdrawn}  />
+                <div className={classes.searchbar}>
+                    <div> <FiSearch size={20} /> </div>
+                    <input placeholder='Search users' onChange={e => setSearchQuery(e.target.value)} />
                 </div>
-                <Plans data={userData} />
-                <Transactions data={userData.transactions} onSelect={e => setShowmodal(e)} />
+                <div className={classes.mainContainer}>
+                    {filteredUsers.map((i, idx) => (
+                        <User
+                            data={i}
+                            key={idx}
+                            openTransactions={() => openTransactions(i)}
+                            updateBalance={() => updateBalance(i)}
+                        />
+                    ))}
+                </div>
             </div>
         )
     }
 
     return (
-        <>
-        <SideDrawer active={'Dashboard'}>
-            {container}
-        </SideDrawer>
-        {showmodal && <TransactionModal data={showmodal} userId={userData.userId} close={() => setShowmodal(null)} />}
-        </>
+        <div>
+            <Header />
+            {loading ? <Loader /> : container}
+        </div>
     )
 }
 

@@ -1,13 +1,7 @@
-import { register, init, setEmailModal, login, logout } from "./authActions";
-import { setShowDrawer, fetch_data, deposit } from "./mainActions";
+import { fetch_data, updateTransaction, updateBalance } from "./mainActions";
 
 export {
-    register,
-    init,
-    setEmailModal,
-    login,
-    logout,
-    setShowDrawer,
     fetch_data,
-    deposit
+    updateTransaction,
+    updateBalance
 }

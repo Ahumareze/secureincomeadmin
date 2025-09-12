@@ -53,6 +53,22 @@ export const updateBalance = (data) => {
     }
 }
 
+export const updateAccStatus = (data) => {
+    return dispatch => {
+        dispatch(setLoading(true));
+
+        axios.put(dbUrl + '/users/' + data.userId + '.json', data).then(r => {
+            console.log(r);
+            window.location.reload()
+            // dispatch(setLoading(false));
+        }).catch(e => {
+            console.log(e);
+            dispatch(setLoading(false))
+        })
+    }
+}
+
+
 export const setUsers = (value) => {
     return{
         type: actionTypes.SETUSERS,

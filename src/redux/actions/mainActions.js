@@ -5,12 +5,12 @@ const dbUrl = 'https://incomebrokers-default-rtdb.firebaseio.com/';
 export const fetch_data = () => {
     return dispatch => {
         dispatch(setLoading(true));
-        console.log('hello orld')
+        // console.log('hello orld')
 
         axios.get(dbUrl + 'users.json').then(r => {
             const data = r.data;
             const arr = [];
-            Object.keys(data).map(i => {
+            Object.keys(data).forEach(i => {
                 const item = {...data[i], userId: i};
                 arr.unshift(item)
             })

@@ -25,14 +25,14 @@ function User({data, openTransactions, updateBalance}) {
         )
     };
 
-    const Plan = ({plan, amount}) => {
-        return(
-            <div className={classes.plan}>
-                <h3>${(amount).toLocaleString()}</h3>
-                <p>{plan}</p>
-            </div>
-        )
-    };
+    // const Plan = ({plan, amount}) => {
+    //     return(
+    //         <div className={classes.plan}>
+    //             <h3>${(amount).toLocaleString()}</h3>
+    //             <p>{plan}</p>
+    //         </div>
+    //     )
+    // };
 
     const handleDisable = () => {
         const newUser = {
@@ -67,7 +67,7 @@ function User({data, openTransactions, updateBalance}) {
     return (
         <div className={classes.container}>
             <div className={classes.top}>
-                <img src={data.img} />
+                <img src={data.img} alt='' />
                 <div className={classes.top_details}>
                     <div style={{display: 'flex', alignItems: 'center', gap: 20}}>
                         <h3>{data.name}</h3>

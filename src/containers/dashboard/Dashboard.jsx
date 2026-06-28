@@ -30,7 +30,7 @@ function Dashboard({openTransactions, updateBalance}) {
 
     useEffect(() => {
         dispatch(fetch_data());
-    }, []);
+    }, [dispatch]);
 
     let container = <p>Empty screen</p>
     if(users){
